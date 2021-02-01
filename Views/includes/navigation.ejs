@@ -1,0 +1,43 @@
+<header>
+    <div class="header__navbar">
+        <ul class="header__navbar--list">
+            <li onclick="location.href = '/'" class="header__navbar--item <%= path === 'shop' ? 'active' : '' %>">
+                <a>Shop</a>
+            </li>
+            <li onclick="location.href = '/products'" class="header__navbar--item <%= path === 'products' ? 'active' : '' %>">
+                <a>Products</a>
+            </li>
+            <% if (isAuthenticated) { %>
+                <li onclick="location.href = '/cart'" class="header__navbar--item <%= path === 'cart' ? 'active' : '' %>">
+                    <a>Cart</a>
+                </li>
+                <li onclick="location.href = '/orders'" class="header__navbar--item <%= path === 'orders' ? 'active' : '' %>">
+                    <a>Orders</a>
+                </li>
+                <li onclick="location.href = '/admin/add-product'" class="header__navbar--item <%= path === 'buyProduct' ? 'active' : '' %>">
+                    <a>Add Product</a>
+                </li>
+                <li onclick="location.href = '/admin/all-products'" class="header__navbar--item <%= path === 'admin/products' ? 'active' : '' %>">
+                    <a>Products</a>
+                </li>
+            <% } %>
+        </ul>
+        <ul class="header__navbar--list">
+            <% if (!isAuthenticated) { %>
+                <li onclick="location.href = '/login'" class="header__navbar--item <%= path === 'login' ? 'active' : '' %>">
+                    <a>Login</a>
+                </li>
+                <li onclick="location.href = '/signup'" class="header__navbar--item <%= path === 'signup' ? 'active' : '' %>">
+                    <a>Signup</a>
+                </li>
+            <% } else { %>
+                <li class="header__navbar--item">
+                    <form action="/logout" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="btn" type="submit">Logout</button>
+                    </form>
+                </li>
+             <% } %>
+        </ul>
+    </div>
+</header>

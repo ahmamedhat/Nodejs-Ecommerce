@@ -1,0 +1,31 @@
+<%- include('../includes/header.ejs') %>
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <% if (prods.length > 0) { %>
+            <div class="products__list">
+                <% for (let product of prods) { %>
+                    <div class="products__list--item">
+                        <h1><%= product.title %></h1>
+                        <div class="item__image">
+                            <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+                        </div>
+                        <div class="item__details">
+                            <p>$<%= product.price %></p>
+                            <p><%= product.description %></p>
+                            <a class="btn-final" href="edit-product/<%= product._id %>?edit=true">Edit</a>
+                            <form action="/admin/delete-product" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="productId" value="<%= product._id %>">
+                                <button class="btn" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </div> 
+                <% } %>
+            </div>
+        <% } else { %>
+            <h1>No Products To Show</h1>
+        <% } %>
+    </main>
+</body>
+</html>
