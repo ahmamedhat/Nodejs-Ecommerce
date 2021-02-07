@@ -1,32 +1,59 @@
 const express = require("express");
 const path = require("path");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDbStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
+const multer = require("multer");
 
-const mongoose = require("mongoose");
+const error = require("./controllers/error");
 const User = require("./models/user");
 
 const MONGODBURI =
   "mongodb+srv://ahmad:miO3wJt4bw4Xmhjz@cluster0.l9btu.mongodb.net/shop?retryWrites=true&w=majority";
 
-const bodyParser = require("body-parser");
-const adminRoutes = require("./routes/admin");
-const shop = require("./routes/shop");
-const auth = require("./routes/auth");
-const error = require("./controllers/error");
 const app = express();
-
 const store = new MongoDbStore({
   uri: MONGODBURI,
   collection: "sessions",
 });
-
 const csrfProtection = csrf();
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString().replace(/:/g, '-') + "_" + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+app.set("view engine", "ejs");
+app.set("views", "views");
+
+const adminRoutes = require("./routes/admin");
+const shop = require("./routes/shop");
+const auth = require("./routes/auth");
+
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use('/images' , express.static(path.join(__dirname, 'images')));
+// app.use('*/images',express.static('images'));
+app.use("*/css", express.static("public/css"));
+app.use("*/js", express.static("public/js"));
+app.use(multer({ storage: fileStorage , fileFilter: fileFilter}).single("image"));
 
 app.use(
   session({
@@ -39,8 +66,11 @@ app.use(
 app.use(flash());
 app.use(csrfProtection);
 
-app.set("view engine", "ejs");
-app.set("views", "views");
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
 
 app.use((req, res, next) => {
   if (!req.session.user) {
@@ -48,22 +78,33 @@ app.use((req, res, next) => {
   }
   User.findById(req.session.user._id)
     .then((user) => {
+      if (!user) {
+        return next();
+      }
       req.user = user;
       next();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      next(new Error(err));
+    });
 });
 
-app.use((req , res , next) => {
-  res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
-  next();
-})
-app.use("/admin", adminRoutes);
 app.use(shop);
+app.use("/admin", adminRoutes);
 app.use(auth);
 
+app.get("/500", error.error500);
 app.use(error.error404);
+
+app.use((error , req , res , next) => {
+  res
+    .status(500)
+    .render('500', {
+      pageTitle: "Error",
+      path: "error",
+      isAuthenticated: req.session.isLoggedIn,
+    });
+});
 
 mongoose
   .connect(MONGODBURI)

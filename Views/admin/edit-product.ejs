@@ -1,35 +1,44 @@
 <%- include ('../includes/header.ejs') %>
-<body>
-    <%- include ('../includes/navigation.ejs') %>
-    <main>
-	<div class="main__form--container">
-        <form class="main__form" action="/admin/<%if(editing){%>edit-product<% }else{%>add-product<%}%>" method="POST">
-            <div class="main__form--input">
-                <label for="title">Title</label>
-                <input type="text" name="title" value ="<% if(editing) {%><%= product.title %><% }%>">
-            </div>
-            <div class="main__form--input">
-                <label for="imageUrl">Image URL</label>
-                <input type="text" name="imageUrl" value="<% if(editing) {%><%= product.imageUrl %><% }%>">
-            </div>
-            <div class="main__form--input">
-                <label for="price">Price</label>
-                <input type="number" name="price" id="price" step="0.01" value="<% if(editing) {%><%= product.price %><% } %>">
-            </div>
-            <div class="main__form--input">
-                <label for="description">Description</label>
-                <input type="text" name="description" value="<% if(editing) {%><%= product.description %><% }%>">
-            </div>
-            
-            <% if (editing) { %>
-                <input type="hidden" name="productId" value="<%= product._id %>">
-            <% } %>
-	    <div class="btn-edit-container">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button type="submit" class="btn btn-edit"><% if(editing) {%>Update<% }else {%> Add<% } %></button>
-	    </div>
-        </form>
-	</div>
-    </main>
-</body>
+    <body>
+        <%- include ('../includes/navigation.ejs') %>
+        <main>
+            <div class="main__form--container">
+                <% if (errorMessage) { %>
+                    <div class="popup-message popup-message--error">
+                        <%= errorMessage %>
+                    </div>
+                <% } %>
+                <form class="main__form" action="/admin/<%if(editing){%>edit-product<% }else{%>add-product<%}%>" method="POST" enctype="multipart/form-data">
+                    <div class="main__form--input">
+                        <label for="title">Title<%= errorMessages.find(e => e.param === 'title') ? '*' : ''%></label>
+                        <input type="text" name="title" value ="<% if(editing || hasError) {%><%= product.title %><% }%>">
+                    </div>
+                    <!-- <div class="main__form--input">
+                        <label for="imageUrl">Image URL<%= errorMessages.find(e => e.param === 'imageUrl') ? '*' : ''%></label>
+                        <input type="text" name="imageUrl" value="<% if(editing || hasError) {%><%= product.imageUrl %><% }%>">
+                    </div> -->
+                    <div class="main__form--input">
+                        <label for="image">Image<%= errorMessages.find(e => e.param === 'imageUrl') ? '*' : ''%></label>
+                        <input type="file" name="image">
+                    </div>
+                    <div class="main__form--input">
+                        <label for="price">Price<%= errorMessages.find(e => e.param === 'price') ? '*' : ''%></label>
+                        <input type="number" name="price" id="price" step="0.01" value="<% if(editing || hasError) {%><%= product.price %><% } %>">
+                    </div>
+                    <div class="main__form--input">
+                        <label for="description">Description<%= errorMessages.find(e => e.param === 'description') ? '*' : ''%></label>
+                        <input type="text" name="description" value="<% if(editing || hasError) {%><%= product.description %><% }%>">
+                    </div>
+                    
+                    <% if (editing) { %>
+                        <input type="hidden" name="productId" value="<%= product._id %>">
+                    <% } %>
+                    <div class="btn-edit-container">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button type="submit" class="btn btn-edit"><% if(editing) {%>Update<% }else {%> Add<% } %></button>
+                    </div>
+                </form>
+            </div> 
+        </main>
+    </body>
 </html>

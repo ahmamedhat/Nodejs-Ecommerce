@@ -10,6 +10,7 @@ router.get("/orders", isAuth, shopController.getOrders);
 // // router.get("/checkout", shopController.getCheckout);
 router.get("/products", shopController.getProducts);
 router.get('/products/:productId', shopController.getProduct);
+router.get('/orders/:orderId', isAuth, shopController.getInvoice);
 
 router.post("/create-order", isAuth, shopController.postCreateOrder);
 router.post("/cart-delete-item", isAuth, shopController.deleteFromCart);

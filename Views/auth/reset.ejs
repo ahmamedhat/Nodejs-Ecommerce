@@ -1,0 +1,25 @@
+<%- include ('../includes/header.ejs') %>
+    <body class="login__body">
+        <%- include ('../includes/navigation.ejs') %>
+
+        <main>
+            <div class="login__container">
+                <% if (errorMessage) { %>
+                    <div class="popup-message popup-message--error">
+                        <%= errorMessage %>
+                    </div>
+                <% } %>
+                <div class="login__container--form">
+                    <form action="/reset" method="POST">
+                        <div class="login__container--field reset-container">
+                            <input class="form__field" type="text" placeholder="Email" name="email">
+                            <label class="form__label reset__label" for="name"><b>Email</b></label>
+                        </div>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="login__container--submit" type="submit">Reset Password</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

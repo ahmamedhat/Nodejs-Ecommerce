@@ -1,43 +1,36 @@
+<script> 
+    const toggle = () => {
+        const nav = document.getElementById("topnav");
+        nav.className === "header__navbar topnav" ? nav.className += " responsive" : nav.className = "header__navbar topnav";
+    };
+</script>
+
 <header>
-    <div class="header__navbar">
-        <ul class="header__navbar--list">
-            <li onclick="location.href = '/'" class="header__navbar--item <%= path === 'shop' ? 'active' : '' %>">
-                <a>Shop</a>
-            </li>
-            <li onclick="location.href = '/products'" class="header__navbar--item <%= path === 'products' ? 'active' : '' %>">
-                <a>Products</a>
-            </li>
+    <div class="header__navbar topnav" id="topnav">
+        <div class="header__navbar--list">
+            <a class="header__navbar--item  <%= path === 'shop' ? 'active' : '' %>" href="/">Shop</a>
+            <a class="header__navbar--item  <%= path === 'products' ? 'active' : '' %>" href="/products">Products</a>
             <% if (isAuthenticated) { %>
-                <li onclick="location.href = '/cart'" class="header__navbar--item <%= path === 'cart' ? 'active' : '' %>">
-                    <a>Cart</a>
-                </li>
-                <li onclick="location.href = '/orders'" class="header__navbar--item <%= path === 'orders' ? 'active' : '' %>">
-                    <a>Orders</a>
-                </li>
-                <li onclick="location.href = '/admin/add-product'" class="header__navbar--item <%= path === 'buyProduct' ? 'active' : '' %>">
-                    <a>Add Product</a>
-                </li>
-                <li onclick="location.href = '/admin/all-products'" class="header__navbar--item <%= path === 'admin/products' ? 'active' : '' %>">
-                    <a>Products</a>
-                </li>
+                <a class="header__navbar--item  <%= path === 'cart' ? 'active' : '' %>" href="/cart">Cart</a>
+                <a class="header__navbar--item  <%= path === 'orders' ? 'active' : '' %>" href="/orders">Orders</a>
+                <a class="header__navbar--item  <%= path === 'buyProduct' ? 'active' : '' %>" href="/admin/add-product">Add Product</a>
+                <a class="header__navbar--item  <%= path === 'admin/products' ? 'active' : '' %>" href="/admin/all-products">Products</a>
             <% } %>
-        </ul>
-        <ul class="header__navbar--list">
+        </div>
+        <div class="header__navbar--list">
             <% if (!isAuthenticated) { %>
-                <li onclick="location.href = '/login'" class="header__navbar--item <%= path === 'login' ? 'active' : '' %>">
-                    <a>Login</a>
-                </li>
-                <li onclick="location.href = '/signup'" class="header__navbar--item <%= path === 'signup' ? 'active' : '' %>">
-                    <a>Signup</a>
-                </li>
+                <a class="header__navbar--item  <%= path === 'login' ? 'active' : '' %>" href="/login">Login</a>
+                <a class="header__navbar--item  <%= path === 'signup' ? 'active' : '' %>" href="/signup">Signup</a>
             <% } else { %>
-                <li class="header__navbar--item">
+                <div class="form-logout">
                     <form action="/logout" method="POST">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button class="btn" type="submit">Logout</button>
+                        <button class="btn btn-form" type="submit">Logout</button>
                     </form>
-                </li>
-             <% } %>
-        </ul>
+                </div>
+            <% } %>       
+        </div>
+        <button class="icon" onclick="toggle()"><i class="fa fa-bars"></i></button>
+        <button class="icon-close" onclick="toggle()"><i class="fas fa-times"></i></button>
     </div>
 </header>

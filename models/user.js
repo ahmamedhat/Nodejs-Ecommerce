@@ -9,6 +9,8 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  resetToken: String,
+  resetTokenExpiration: Date,
   cart: {
     items: [
       {
@@ -47,7 +49,7 @@ userSchema.methods.removeFromCart = function (id) {
   const updatedItems = this.cart.items.filter((product) => {
     return id.toString() !== product.productId.toString();
   });
-  this.cart = updatedItems;
+  this.cart = {items: updatedItems};
   return this.save();
 };
 

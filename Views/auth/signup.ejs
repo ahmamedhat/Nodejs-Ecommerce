@@ -12,15 +12,15 @@
                 <div class="login__container--form signup__container--form">
                     <form action="/signup" method="POST">
                         <div class="login__container--field">
-                            <input class="form__field" type="text" placeholder="Email" name="email">
+                            <input class="form__field <%= errorMessages.find(e => e.param === 'email') ? 'invalid' : ''%>" type="text" placeholder="Email" name="email" value="<%= oldInput.email %>">
                             <label class="form__label" for="email"><b>Email</b></label>
                         </div>
                         <div class="login__container--field">
-                            <input class="form__field" type="password" placeholder="Password" name="password">
+                            <input class="form__field <%= errorMessages.find(e => e.param === 'password') ? 'invalid' : ''%>" type="password" placeholder="Password" name="password" value="<%= oldInput.password %>">
                             <label class="form__label" for="password"><b>Password</b></label>
                         </div>
                         <div class="login__container--field">
-                            <input class="form__field" type="password" placeholder="Comfirm Password" name="confirmPassword">
+                            <input class="form__field <%= errorMessages.find(e => e.param === 'confirmPassword') ? 'invalid' : ''%>" type="password" placeholder="Comfirm Password" name="confirmPassword" value="<%= oldInput.confirmPassword %>">
                             <label class="form__label" for="password"><b>Confirm Password</b></label>
                         </div>
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
