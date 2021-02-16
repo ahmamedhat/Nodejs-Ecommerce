@@ -1,6 +1,6 @@
 const Product = require("../models/product");
 const { validationResult } = require("express-validator/check");
-const fileManager = require('../util/file');
+const fileManager = require("../util/file");
 
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -146,24 +146,22 @@ exports.postEditProduct = (req, res, next) => {
       return next(error);
     });
 };
-exports.postDeleteProduct = (req, res, next) => {
-  const id = req.body.productId;
-  Product.findById(id).then(product => {
-    if (!product) {
-      return next(new Error('Product Not Found'));
-    }
-    fileManager.deletFile(product.imageUrl);
-    return Product.deleteOne({ _id: id, userId: req.user._id }) 
-  }).then(() => {
-    res.redirect("/admin/all-products");
-  })
-  .catch((err) => {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
-  });
-  
-    
+exports.deleteProduct = (req, res, next) => {
+  const id = req.params.productId;
+  Product.findById(id)
+    .then((product) => {
+      if (!product) {
+        return next(new Error("Product Not Found"));
+      }
+      fileManager.deletFile(product.imageUrl);
+      return Product.deleteOne({ _id: id, userId: req.user._id });
+    })
+    .then(() => {
+      res.status(200).json({ message: "success" });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "fail" });
+    });
 };
 
 exports.getProducts = (req, res, next) => {

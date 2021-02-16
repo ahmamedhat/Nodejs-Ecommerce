@@ -1,5 +1,24 @@
 <%- include ('../includes/header.ejs') %>
 <body>
     <%- include ('../includes/navigation.ejs') %>
+
+    <main class="center cart-list">
+        <% if (products.length > 0) { %>
+            <ul>
+                <% products.forEach(product => { %>
+                    <li>
+                        <div class="cart-item">
+                            <h2><%= product.productId.title %> (<%= product.quantity %>)</h2>
+                        </div>
+                    </li>  
+                <% }) %>
+            </ul>
+            <div class="center">
+                <h2>Total: $<%= total %></h2>
+            </div>
+        <% } else { %>
+            <h1>Cart is Empty!</h1>
+        <% } %>
+    </main>
 </body>
 </html>

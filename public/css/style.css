@@ -223,10 +223,6 @@ body {
 
 /* Reusable Styling */
 
-
-main {
-    width: 100%;
-}
 .btn-final:link ,
 .btn-final:visited {
     text-decoration: none;
@@ -327,7 +323,7 @@ main {
     margin: 3rem auto;
     text-align: center;
     justify-content: center;
-    grid-template-rows: repeat(2 , 25rem);
+    grid-template-rows: repeat(1 , 25rem);
     grid-template-columns: repeat(3 , 1fr);
     grid-gap: 2rem;
 }
@@ -441,6 +437,25 @@ li {
 }
 
 /* End of Orders Page */
+
+/* Footer Pagination */
+
+.footer-pagination {
+    width: 40%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    border: 1px solid rgb(40, 199, 0);
+    border-radius: 10px;
+}
+.footer-pagination a {
+    font-size: 1.5rem;
+    margin: 0 1rem;
+}
+.footer-pagination a.p-active {
+    color: black;
+}
+
+/* End of Footer Pagination */
 
 /* Media Queries */
 

@@ -14,11 +14,9 @@
                             <p>$<%= product.price %></p>
                             <p><%= product.description %></p>
                             <a class="btn-final" href="edit-product/<%= product._id %>?edit=true">Edit</a>
-                            <form action="/admin/delete-product" method="POST">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <input type="hidden" name="productId" value="<%= product._id %>">
-                                <button class="btn" type="submit">Delete</button>
-                            </form>
+                                <button class="btn" type="submit" onclick="deleteProduct(this)">Delete</button>
                         </div>
                     </div> 
                 <% } %>
@@ -27,5 +25,6 @@
             <h1 class="center">No Products To Show</h1>
         <% } %>
     </main>
+    <script src="/js/admin.js"></script>
 </body>
 </html>

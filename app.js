@@ -7,12 +7,14 @@ const MongoDbStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
 const multer = require("multer");
+const helmet = require("helmet");
+const compression = require("compression");
 
 const error = require("./controllers/error");
 const User = require("./models/user");
 
 const MONGODBURI =
-  "mongodb+srv://ahmad:miO3wJt4bw4Xmhjz@cluster0.l9btu.mongodb.net/shop?retryWrites=true&w=majority";
+  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.l9btu.mongodb.net/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
 
 const app = express();
 const store = new MongoDbStore({
@@ -92,7 +94,9 @@ app.use((req, res, next) => {
 app.use(shop);
 app.use("/admin", adminRoutes);
 app.use(auth);
-
+  
+app.use(helmet());
+app.use(compression());
 app.get("/500", error.error500);
 app.use(error.error404);
 
@@ -105,10 +109,10 @@ app.use((error , req , res , next) => {
       isAuthenticated: req.session.isLoggedIn,
     });
 });
-
+console.log(process.env.NODE_ENV);
 mongoose
   .connect(MONGODBURI)
   .then(() => {
-    app.listen(3000);
+    app.listen(process.env.PORT || 3000);
   })
   .catch((err) => console.log(err));
