@@ -1,0 +1,34 @@
+<%- include('../includes/header.ejs') %>
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <% if (prods.length > 0) { %>
+            <div class="products__list">
+                <% for (let product of prods) { %>
+                    <div class="products__list--item">
+                        <h1><%= product.title %></h1>
+                        <div class="item__image">
+                            <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
+                        </div>
+                        <div class="item__details">
+                            <p>$<%= product.price %></p>
+                            <p><%= product.description %></p>
+                            <a class="btn-final" href="/products/<%= product._id %>">Details</a>
+                            <% if (isAuthenticated) { %>
+                                <form class="item__form" action="/cart" method="POST">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <button type="submit" class="btn-cart">Add to Cart</button>
+                                    <input type="hidden" name="productId" value="<%= product._id %>">
+                                </form> 
+                            <% } %>
+                        </div>
+                    </div> 
+                <% } %>
+            </div>
+        <%- include('../includes/pagination.ejs' , {currentPage: currentPage , nextPage: nextPage , prevPage: prevPage , lastPage: lastPage , hasNextPage:hasNextPage , hasPrevPage: hasPrevPage}) %>
+        <% } else { %>
+            <h1>No Products To Show</h1>
+        <% } %>
+    </main>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<%- include ('../includes/header.ejs') %>
+    <body class="login__body">
+        <%- include ('../includes/navigation.ejs') %>
+
+        <main>
+            <div class="login__container">
+                <% if (errorMessage) { %>
+                    <div class="popup-message popup-message--error">
+                        <%= errorMessage %>
+                    </div>
+                <% } %>
+                <div class="login__container--form">
+                    <form action="/login" method="POST">
+                        <div class="login__container--field">
+                            <input class="form__field <%= errorMessages.find(e => e.param === 'email') ? 'invalid' : ''%>" type="text" placeholder="Email" name="email" value="<%= oldInput.email %>">
+                            <label class="form__label" for="name"><b>Email</b></label>
+                        </div>
+                        <div class="login__container--field">
+                            <input class="form__field <%= errorMessages.find(e => e.param === 'password') ? 'invalid' : ''%>" type="password" placeholder="Password" name="password" value="<%= oldInput.password %>">
+                            <label class="form__label" for="password"><b>Password</b></label>
+                        </div>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="login__container--submit" type="submit">Login</button>
+                    </form>
+                </div>
+                <div class="forget-password center">
+                    <p>Forget Password?</p><a href="/reset">Reset Now</a>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
