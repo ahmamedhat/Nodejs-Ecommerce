@@ -100,15 +100,15 @@ app.use(compression());
 app.get("/500", error.error500);
 app.use(error.error404);
 
-// app.use((error , req , res , next) => {
-//   res
-//     .status(500)
-//     .render('500', {
-//       pageTitle: "Error",
-//       path: "error",
-//       isAuthenticated: req.session.isLoggedIn,
-//     });
-// });
+app.use((error , req , res , next) => {
+  res
+    .status(500)
+    .render('500', {
+      pageTitle: "Error",
+      path: "error",
+      isAuthenticated: req.session.isLoggedIn,
+    });
+});
 // console.log(process.env.NODE_ENV);
 mongoose
   .connect(MONGODBURI)
