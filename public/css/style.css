@@ -389,13 +389,20 @@ body {
 .product__detail {
     position: relative;
     height: 50vh;
-    width: 25%;
+    width: 60%;
     text-align: center;
-
+}
+.product__detail p {
+    margin-bottom: 2rem;
 }
 .img--detail {
     background-color: white;
     margin-top: 20px;
+    
+}
+.img--detail img {
+    max-width: 20rem;
+    max-height: 16rem;
 }
 
 /* End of Products Detail */
@@ -576,6 +583,10 @@ li {
     .item__image img{
         max-width: 28rem;
         max-height: 17rem;
+    }
+    .img--detail img {
+        max-width: 14rem;
+        max-height: 12rem;
     }
     .pagination {
         position: unset;
