@@ -173,7 +173,7 @@ exports.getProducts = (req, res, next) => {
   .countDocuments()
   .then((prodsCount) => {
     totalItems = prodsCount;
-    return Product.find()
+    return Product.find({ userId: req.user._id })
       .skip((page - 1) * ITEMS_PER_PAGE)
       .limit(ITEMS_PER_PAGE);
   })
