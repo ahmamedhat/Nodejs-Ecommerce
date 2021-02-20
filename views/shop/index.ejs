@@ -1,7 +1,7 @@
 <%- include('../includes/header.ejs') %>
 <body>
     <%- include('../includes/navigation.ejs') %>
-    <main>
+    <main class="main">
         <% if (prods.length > 0) { %>
             <div class="products__list">
                 <% for (let product of prods) { %>
@@ -25,9 +25,11 @@
                     </div> 
                 <% } %>
             </div>
-        <%- include('../includes/pagination.ejs' , {currentPage: currentPage , nextPage: nextPage , prevPage: prevPage , lastPage: lastPage , hasNextPage:hasNextPage , hasPrevPage: hasPrevPage}) %>
+                <%- include('../includes/pagination.ejs' , {currentPage: currentPage , nextPage: nextPage , prevPage: prevPage , lastPage: lastPage , hasNextPage:hasNextPage , hasPrevPage: hasPrevPage}) %>
         <% } else { %>
-            <h1>No Products To Show</h1>
+            <div class="center">
+                <h1>No Products To Show</h1>
+            </div>
         <% } %>
     </main>
 </body>

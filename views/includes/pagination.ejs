@@ -1,15 +1,15 @@
-<div class="footer-pagination center">
+<div class="pagination">
     <% if (hasPrevPage) { %>
-        <a class="btn-final" href="?page=<%= prevPage %>">Previous</a>
+        <a href="?page=<%= prevPage %>">&laquo;</a>
     <% } %>
     <% if (currentPage !== 1 && prevPage !== 1) { %>
-        <a class="btn-final" href="?page=1">1</a>
+        <a href="?page=1">1</a>
     <% } %>
-    <a class="btn-final p-active" href="?page=<%= currentPage %>"><%= currentPage %></a>
+    <a class="active" href="?page=<%= currentPage %>"><%= currentPage %></a>
     <% if (currentPage !== lastPage && nextPage !== lastPage) { %>
-        <a class="btn-final" href="?page=<%= lastPage %>"><%= lastPage %></a>
+        <a href="?page=<%= lastPage %>"><%= lastPage %></a>
         <% } %>
     <% if (hasNextPage) { %>
-        <a class="btn-final" href="?page=<%= nextPage %>">Next</a>
+        <a href="?page=<%= nextPage %>">&raquo;</a>
     <% } %>
-    </div>
+</div>

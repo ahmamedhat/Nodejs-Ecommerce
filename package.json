@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "SET NODE_ENV=production&& SET MONGO_USER=ahmad&& SET MONGO_PASSWORD=miO3wJt4bw4Xmhjz&& SET MONGO_DATABASE=shop&& node app.js",
-    "start:dev": "nodemon app.js"
+    "start": "SET NODE_ENV=production&& SET MONGO_USER=ahmad&& SET MONGO_PASSWORD=miO3wJt4bw4Xmhjz&& SET MONGO_DATABASE=shop&& nodemon app.js",
+    "start:dev": "node app.js"
   },
   "author": "ahmad",
   "license": "ISC",

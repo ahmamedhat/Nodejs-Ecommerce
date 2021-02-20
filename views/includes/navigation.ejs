@@ -2,7 +2,7 @@
     <div class="header__navbar topnav" id="topnav">
         <div class="header__navbar--list">
             <a class="header__navbar--item  <%= path === 'shop' ? 'active' : '' %>" href="/">Shop</a>
-            <a class="header__navbar--item  <%= path === 'products' ? 'active' : '' %>" href="/products">Products</a>
+            <!-- <a class="header__navbar--item  <%= path === 'products' ? 'active' : '' %>" href="/products">Products</a> -->
             <% if (isAuthenticated) { %>
                 <a class="header__navbar--item  <%= path === 'cart' ? 'active' : '' %>" href="/cart">Cart</a>
                 <a class="header__navbar--item  <%= path === 'orders' ? 'active' : '' %>" href="/orders">Orders</a>
