@@ -9,6 +9,11 @@
                         <%= errorMessage %>
                     </div>
                 <% } %>
+                <% if (validMessage) { %>
+                    <div class="popup-message popup-message--valid">
+                        <%= validMessage %>
+                    </div>
+                <% } %>
                 <div class="login__container--form">
                     <form action="/reset" method="POST">
                         <div class="login__container--field reset-container">

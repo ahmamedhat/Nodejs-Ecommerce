@@ -176,6 +176,8 @@ exports.postLogout = (req, res, next) => {
 
 exports.getReset = (req, res, next) => {
   let errMessage = req.flash("error");
+  let validMessage = req.flash("valid");
+  validMessage = validMessage[0];
   if (errMessage.length > 0) {
     errMessage = errMessage[0];
   } else {
@@ -185,6 +187,7 @@ exports.getReset = (req, res, next) => {
     pageTitle: "Login",
     path: "login",
     errorMessage: errMessage,
+    validMessage: validMessage
   });
 };
 
@@ -207,7 +210,8 @@ exports.postReset = (req, res, next) => {
       })
       .then((result) => {
         if (result) {
-          res.redirect("/");
+          req.flash("valid", "An Email has been Sent");
+          res.redirect('/reset');
           transporter.sendMail({
             to: req.body.email,
             from: "ahmadmed7at77@gmail.com",

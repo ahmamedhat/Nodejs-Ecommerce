@@ -307,6 +307,11 @@ body {
     color: rgb(219, 37, 37);
     background-color: rgb(247, 168, 168);
 }
+.popup-message--valid {
+    border-color: rgb(124, 255, 17);
+    color: rgb(79, 148, 0);
+    background-color: rgb(178, 235, 181);
+}
 .invalid {
     border-color: rgb(223, 105, 105);
 }
